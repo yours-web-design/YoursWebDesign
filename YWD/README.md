@@ -3,7 +3,8 @@
 ### ENDPOINTS:
 * USER LIST GET : http://localhost:8000/api/users/ 
 * CREATE USER POST : http://localhost:8000/api/users/ 
-``` format : {
+``` 
+format : {
     "email": "",
     "first_name": "",
     "last_name": "",
@@ -18,7 +19,8 @@
 ```
 
 * LOGIN POST : http://localhost:8000/api/auth/login/
-``` format : {
+``` 
+format : {
     "username": "",
     "email": "",
     "password": ""
