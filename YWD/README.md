@@ -1,9 +1,9 @@
-# ACTIVATE ENVIRONMENT
+### ACTIVATE ENVIRONMENT
 * source env/bin/activate
-# ENDPOINTS:
+### ENDPOINTS:
 * USER LIST GET : http://localhost:8000/api/users/ 
 * CREATE USER POST : http://localhost:8000/api/users/ 
-** format : {
+``` format : {
     "email": "",
     "first_name": "",
     "last_name": "",
@@ -15,12 +15,13 @@
         "phone_number": ""
     }
 }
+```
 
 * LOGIN POST : http://localhost:8000/api/auth/login/
-** format : {
+``` format : {
     "username": "",
     "email": "",
     "password": ""
 }
-
+```
 Username can be null here
