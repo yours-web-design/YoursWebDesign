@@ -57,11 +57,13 @@ class App extends Component {
 
   handle_signup = (e, data) => {
     e.preventDefault();
+    data['username']=data['email']
     fetch('http://localhost:8000/core/users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
+
       body: JSON.stringify(data)
     })
       .then(res => res.json())

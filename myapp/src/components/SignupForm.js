@@ -21,6 +21,7 @@ class SignupForm extends React.Component {
     return (
       <form onSubmit={e => this.props.handle_signup(e, this.state)}>
         <h4>Sign Up</h4>
+        <div>
         <label htmlFor="first_name">First Name</label>
         <input
           type="text"
@@ -28,6 +29,9 @@ class SignupForm extends React.Component {
           value={this.state.first_name}
           onChange={this.handle_change}
         />
+        </div>
+        
+        <div>
         <label htmlFor="last_name">Last Name</label>
         <input
           type="text"
@@ -35,13 +39,16 @@ class SignupForm extends React.Component {
           value={this.state.last_name}
           onChange={this.handle_change}
         />
-        <label htmlFor="username">Username</label>
+        </div>
+        
+        {/* <label htmlFor="username">Username</label>
         <input
-          type="text"
+          type="hidden"
           name="username"
-          value={this.state.username}
-          onChange={this.handle_change}
-        />
+          value={this.state.email}
+          onLoad={this.handle_change}
+        /> */}
+        <div>
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -49,6 +56,9 @@ class SignupForm extends React.Component {
           value={this.state.email}
           onChange={this.handle_change}
         />
+        </div>
+        
+        <div>
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -56,7 +66,10 @@ class SignupForm extends React.Component {
           value={this.state.password}
           onChange={this.handle_change}
         />
-        <input type="submit" />
+        </div>
+        
+        <div><input type="submit" /></div>
+        
       </form>
     );
   }
