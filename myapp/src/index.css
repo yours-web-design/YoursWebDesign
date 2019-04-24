@@ -12,3 +12,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.nav-left {
+  margin-left: auto !important;
+}
+
+.MuiGrid-spacing-xs-8-149 > .MuiGrid-item-128  {
+  margin-bottom: 16px;
+}

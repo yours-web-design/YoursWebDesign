@@ -34,7 +34,7 @@ class App extends Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
-    fetch('http://localhost:8000/token-auth/', {
+    fetch('http://localhost:8000/api/auth/login/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -114,7 +114,7 @@ class App extends Component {
         {form}
         <h3>
           {this.state.logged_in
-            ? `Hello, ${this.state.first_name}`
+            ? `Hello, ${this.state.username}`
             : 'Please Log In'}
         </h3>
       </div>

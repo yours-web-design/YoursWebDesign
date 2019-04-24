@@ -1,5 +1,15 @@
 ### ACTIVATE ENVIRONMENT
 * source env/bin/activate
+
+### RUNSERVER
+
+```
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
+
 ### ENDPOINTS:
 * USER LIST GET : http://localhost:8000/api/users/ 
 * CREATE USER POST : http://localhost:8000/api/users/ 
