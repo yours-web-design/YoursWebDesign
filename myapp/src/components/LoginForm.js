@@ -9,10 +9,16 @@ import {
   Checkbox
 } from "@material-ui/core";
 
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import PermIdentity from "@material-ui/icons/PermIdentity";
 import LockOutline from "@material-ui/icons/Lock";
+import IconButton from "@material-ui/core/IconButton";
 
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 const styles = theme => ({
   margin: {
@@ -27,23 +33,41 @@ class LoginTab extends React.Component {
   state = {
     email: "",
     password: "",
-    username: ""
+    username: "",
+    showPassword: false
   };
+
+  showHide = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      type: this.state.type === 'input' ? 'password' : 'input'
+    })
+  }
 
   handle_change = e => {
     const name = e.target.name;
     const value = e.target.value;
     this.setState(prevstate => {
-      const newState = { ...prevstate };
+      let newState = { ...prevstate };
+      if(newState.hasOwnProperty('showPassword')) {
+        delete newState.showPassword;
+      }
       newState[name] = value;
       return newState;
     });
   };
 
+
+  handleClickShowPassword = () => {
+    this.setState(state => ({ showPassword: !state.showPassword }));
+  };
+
+
   render() {
     const { classes } = this.props;
     return (
-
+      <div>
       <Paper
         className={classes.padding}
         style={{
@@ -72,7 +96,7 @@ class LoginTab extends React.Component {
               borderTopRightRadius: "30px"
             }}
           >
-            <span
+            <h3
               style={{
                 position: "absolute",
                 top: "50%",
@@ -80,8 +104,8 @@ class LoginTab extends React.Component {
                 transform: "translate(-50%,-50%)"
               }}
             >
-              <AccountCircle />
-            </span>
+              LOGIN
+            </h3>
           </header>
           <form onSubmit={e => this.props.handle_login(e, this.state)}>
             <div className={classes.margin}>
@@ -108,33 +132,39 @@ class LoginTab extends React.Component {
                   <span><LockOutline /></span>
                 </Grid>
                 <Grid item md={true} sm={true} xs={true}>
-                  <TextField
-                    id="password"
-                    label="Password"
-                    type="password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.handle_change}
-                    fullWidth
-                    required
-                  />
+                  <FormControl style={{width:"100%"}}>
+                    <InputLabel htmlFor="adornment-password">Password</InputLabel>
+                    <Input
+                      id="adornment-password"
+                      type={this.state.showPassword ? "text" : "password"}
+                      value={this.state.password}
+                      onChange={this.handle_change}
+                      name="password"
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="Toggle password visibility"
+                            onClick={this.handleClickShowPassword}
+                          >
+                            {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
                 </Grid>
+
               </Grid>
               <Grid container alignItems="center" justify="space-between">
-                <Grid item>
-                  <FormControlLabel
-                    control={<Checkbox color="primary" />}
-                    label="Remember me"
-                  />
-                </Grid>
-                <Grid item>
+                
+                <Grid item style={{marginLeft: "auto"}}>
                   <Button
                     disableFocusRipple
                     disableRipple
                     style={{ textTransform: "none" }}
                     variant="text"
                     color="primary"
-                    
+
                   >
                     Forgot password ?
                   </Button>
@@ -146,7 +176,7 @@ class LoginTab extends React.Component {
                   style={{
                     background: "#2196f3",
                     color: "#FFF",
-                    marginTop:"15px",
+                    marginTop: "15px",
                   }}
                   type="submit"
                 >
@@ -157,6 +187,7 @@ class LoginTab extends React.Component {
           </form>
         </section>
       </Paper>
+      </div>
     );
   }
 }

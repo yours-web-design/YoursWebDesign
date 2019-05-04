@@ -20,3 +20,9 @@ code {
 .MuiGrid-spacing-xs-8-149 > .MuiGrid-item-128  {
   margin-bottom: 16px;
 }
+
+.button:disabled {
+  cursor: not-allowed;
+  pointer-events: visible;
+  background: grey !important;
+}

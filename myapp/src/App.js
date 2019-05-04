@@ -17,23 +17,27 @@ class App extends Component {
 
   componentDidMount() {
     if (this.state.logged_in) {
-      fetch('http://localhost:8000/core/current_user/', {
+      fetch('http://localhost:8000/api/users', {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }
       })
         .then(res => res.json())
         .then(json => {
-          this.setState({ username: json.username ,
-                          first_name:json.first_name,
-                          last_name:json.last_name,
-                          email:json.email});
+          this.setState({
+            first_name: json.first_name,
+            last_name: json.last_name,
+            email: json.email
+          });
         });
     }
   }
 
   handle_login = (e, data) => {
     e.preventDefault();
+    if(data.hasOwnProperty('showPassword')) {
+      delete data.showPassword;
+    }
     fetch('http://localhost:8000/api/auth/login/', {
       method: 'POST',
       headers: {
@@ -47,24 +51,41 @@ class App extends Component {
         this.setState({
           logged_in: true,
           displayed_form: '',
-          username: json.user.username,
           email: json.user.email,
-          first_name : json.user.first_name,
-          last_name : json.user.last_name
+          first_name: json.user.first_name,
+          last_name: json.user.last_name
         });
       });
   };
 
   handle_signup = (e, data) => {
     e.preventDefault();
-    data['username']=data['email']
-    fetch('http://localhost:8000/core/users/', {
+    console.log(data);
+    let obj = { ...data };
+    let { email, first_name, last_name, phone_number, date_of_birth, gender, country, password } = obj;
+    let profile = {
+      country,
+      date_of_birth,
+      gender,
+      phone_number
+    }
+    let objFinal = {
+      email,
+      first_name,
+      last_name,
+      password,
+      profile
+
+    };
+
+
+    fetch('http://localhost:8000/api/users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
 
-      body: JSON.stringify(data)
+      body: JSON.stringify(objFinal)
     })
       .then(res => res.json())
       .then(json => {
@@ -72,17 +93,16 @@ class App extends Component {
         this.setState({
           logged_in: true,
           displayed_form: '',
-          username: json.username,
           email: json.email,
-          first_name : json.first_name,
-          last_name : json.last_name
+          first_name: json.first_name,
+          last_name: json.last_name
         });
       });
   };
 
   handle_logout = () => {
     localStorage.removeItem('token');
-    this.setState({ logged_in: false, username: '' });
+    this.setState({ logged_in: false, email: '' });
   };
 
   display_form = form => {
@@ -114,8 +134,8 @@ class App extends Component {
         {form}
         <h3>
           {this.state.logged_in
-            ? `Hello, ${this.state.username}`
-            : 'Please Log In'}
+            ? `Hello, ${this.state.email}`
+            : null}
         </h3>
       </div>
     );
