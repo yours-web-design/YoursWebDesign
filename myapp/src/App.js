@@ -17,7 +17,7 @@ class App extends Component {
 
   componentDidMount() {
     if (this.state.logged_in) {
-      fetch('http://localhost:8000/api/users', {
+      fetch(`http://localhost:8000/api/users/${localStorage.getItem('pk')}`, {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }
@@ -35,6 +35,7 @@ class App extends Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
+    data.username = data.email;
     if(data.hasOwnProperty('showPassword')) {
       delete data.showPassword;
     }
@@ -48,12 +49,14 @@ class App extends Component {
       .then(res => res.json())
       .then(json => {
         localStorage.setItem('token', json.token);
+        localStorage.setItem('pk', json.user.pk);
         this.setState({
           logged_in: true,
           displayed_form: '',
           email: json.user.email,
           first_name: json.user.first_name,
-          last_name: json.user.last_name
+          last_name: json.user.last_name,
+          pk: json.user.pk
         });
       });
   };
@@ -90,13 +93,18 @@ class App extends Component {
       .then(res => res.json())
       .then(json => {
         localStorage.setItem('token', json.token);
+        
         this.setState({
           logged_in: true,
           displayed_form: '',
           email: json.email,
           first_name: json.first_name,
-          last_name: json.last_name
+          last_name: json.last_name,
+          url:json.url
         });
+
+        const primaryKey = this.state.url.split("/")[5];
+        localStorage.setItem('pk', primaryKey);
       });
   };
 
